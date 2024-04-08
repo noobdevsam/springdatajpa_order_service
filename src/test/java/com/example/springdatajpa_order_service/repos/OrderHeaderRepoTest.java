@@ -28,5 +28,6 @@ public class OrderHeaderRepoTest {
         var fetchedOrder = repo.getReferenceById(savedOrder.getId());
         assertNotNull(fetchedOrder);
         assertNotNull(fetchedOrder.getId());
+        assertNotNull(fetchedOrder.getCreatedDate());
     }
 }
