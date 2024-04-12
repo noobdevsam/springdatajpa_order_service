@@ -1,5 +1,6 @@
 package com.example.springdatajpa_order_service.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -58,6 +59,15 @@ public class OrderHeader extends BaseEntity {
 
     @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
     private Set<OrderLine> orderLines;
+
+    public void addOrderLine(OrderLine orderLine) {
+        if (orderLines == null) {
+            orderLines = new HashSet<>();
+        }
+
+        orderLines.add(orderLine);
+        orderLine.setOrderHeader(this);
+    }
 
     // excluding 'orderlines' property from hashcode method
     @Override
