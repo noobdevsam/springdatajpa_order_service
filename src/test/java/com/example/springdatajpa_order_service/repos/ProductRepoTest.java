@@ -32,4 +32,11 @@ public class ProductRepoTest {
         assertNotNull(fetchedProduct.getCreatedDate());
         assertNotNull(fetchedProduct.getLastModifiedDate());
     }
+
+    @Test
+    void testGetCategories() {
+        var product = repo.findByDescription("PRODUCT1");
+        assertNotNull(product);
+        assertNotNull(product.getCategories());
+    }
 }
