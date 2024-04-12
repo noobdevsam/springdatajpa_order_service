@@ -17,6 +17,9 @@ public class OrderLine extends BaseEntity{
     @ManyToOne
     private OrderHeader orderHeader;
 
+    @ManyToOne
+    private Product product;
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -36,6 +39,11 @@ public class OrderLine extends BaseEntity{
                 return false;
         } else if (!orderHeader.equals(other.orderHeader))
             return false;
+        if (product == null) {
+            if (other.product != null)
+                return false;
+        } else if (!product.equals(other.product))
+            return false;
         return true;
     }
 
@@ -45,6 +53,7 @@ public class OrderLine extends BaseEntity{
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((quantityOrdered == null) ? 0 : quantityOrdered.hashCode());
+        result = prime * result + ((product == null) ? 0 : product.hashCode());
         return result;
     }
 
