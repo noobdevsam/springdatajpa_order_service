@@ -1,19 +1,22 @@
 package com.example.springdatajpa_order_service.domain;
 
+import java.util.Set;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.OneToMany;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @Entity
 @AttributeOverrides({
     @AttributeOverride(
@@ -52,4 +55,55 @@ public class OrderHeader extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
+    private Set<OrderLine> orderLines;
+
+    // excluding 'orderlines' property from hashcode method
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+        result = prime * result + ((shippingAddress == null) ? 0 : shippingAddress.hashCode());
+        result = prime * result + ((billToAddress == null) ? 0 : billToAddress.hashCode());
+        result = prime * result + ((orderStatus == null) ? 0 : orderStatus.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OrderHeader other = (OrderHeader) obj;
+        if (customer == null) {
+            if (other.customer != null)
+                return false;
+        } else if (!customer.equals(other.customer))
+            return false;
+        if (shippingAddress == null) {
+            if (other.shippingAddress != null)
+                return false;
+        } else if (!shippingAddress.equals(other.shippingAddress))
+            return false;
+        if (billToAddress == null) {
+            if (other.billToAddress != null)
+                return false;
+        } else if (!billToAddress.equals(other.billToAddress))
+            return false;
+        if (orderStatus != other.orderStatus)
+            return false;
+        if (orderLines == null) {
+            if (other.orderLines != null)
+                return false;
+        } else if (!orderLines.equals(other.orderLines))
+            return false;
+        return true;
+    }
+
+    
 }
