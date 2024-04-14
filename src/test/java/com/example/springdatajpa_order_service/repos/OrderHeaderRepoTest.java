@@ -107,12 +107,15 @@ public class OrderHeaderRepoTest {
         var orderHeader = new OrderHeader();
         var customer = new Customer();
         var orderLine = new OrderLine();
+        var orderApproval = new OrderApproval();
 
         customer.setCustomerName("New new customer");
         orderHeader.setCustomer(curepo.save(customer));
         orderLine.setQuantityOrdered(3);
         orderLine.setProduct(product);
         orderHeader.addOrderLine(orderLine);
+        orderApproval.setApprovedBy("Other");
+        orderHeader.setOrderApproval(orderApproval);
 
         var savedOrder = repo.saveAndFlush(orderHeader);
 
