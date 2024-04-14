@@ -10,6 +10,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,7 +47,9 @@ import lombok.Setter;
     )
 })
 public class OrderHeader extends BaseEntity {
-    private String customer;
+    
+    @ManyToOne
+    private Customer customer;
 
     @Embedded
     private Address shippingAddress;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.example.springdatajpa_order_service.domain.Customer;
 import com.example.springdatajpa_order_service.domain.OrderHeader;
 import com.example.springdatajpa_order_service.domain.OrderLine;
 import com.example.springdatajpa_order_service.domain.Product;
@@ -24,6 +25,9 @@ public class OrderHeaderRepoTest {
     @Autowired
     ProductRepo prepo;
 
+    @Autowired
+    CustomerRepo curepo;
+
     Product product;
 
     @BeforeEach
@@ -37,7 +41,13 @@ public class OrderHeaderRepoTest {
     @Test
     void testSaveOrder() {
         var orderheader = new OrderHeader();
-        orderheader.setCustomer("New Customer");
+        // orderheader.setCustomer("New Customer");
+
+        var customer = new Customer();
+        customer.setCustomerName("N customer");
+        var savedCustomer = curepo.save(customer);
+
+        orderheader.setCustomer(savedCustomer);
 
         var savedOrder = repo.save(orderheader);
         assertNotNull(savedOrder);
@@ -53,7 +63,13 @@ public class OrderHeaderRepoTest {
     @Test
     void testSaveOrderWithLine() {
         var orderheader = new OrderHeader();
-        orderheader.setCustomer("New Customer");
+        // orderheader.setCustomer("New Customer");
+
+        var customer = new Customer();
+        customer.setCustomerName("N customer");
+        var savedCustomer = curepo.save(customer);
+
+        orderheader.setCustomer(savedCustomer);
 
         var orderLine = new OrderLine();
         orderLine.setQuantityOrdered(5);
