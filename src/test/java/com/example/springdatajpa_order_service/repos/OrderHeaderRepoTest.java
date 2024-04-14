@@ -28,9 +28,6 @@ public class OrderHeaderRepoTest {
 
     @Autowired
     CustomerRepo curepo;
-    
-    @Autowired
-    OrderApprovalRepo oarepo;
 
     Product product;
 
@@ -85,9 +82,7 @@ public class OrderHeaderRepoTest {
 
         var approval = new OrderApproval();
         approval.setApprovedBy("Me");
-        var savedApproval = oarepo.save(approval);
-
-        orderheader.setOrderApproval(savedApproval);
+        orderheader.setOrderApproval(approval);
 
         var savedOrder = repo.save(orderheader);
 
