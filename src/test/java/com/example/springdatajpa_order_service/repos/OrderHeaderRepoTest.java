@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.example.springdatajpa_order_service.domain.Customer;
+import com.example.springdatajpa_order_service.domain.OrderApproval;
 import com.example.springdatajpa_order_service.domain.OrderHeader;
 import com.example.springdatajpa_order_service.domain.OrderLine;
 import com.example.springdatajpa_order_service.domain.Product;
@@ -27,6 +28,9 @@ public class OrderHeaderRepoTest {
 
     @Autowired
     CustomerRepo curepo;
+    
+    @Autowired
+    OrderApprovalRepo oarepo;
 
     Product product;
 
@@ -78,6 +82,12 @@ public class OrderHeaderRepoTest {
         // orderheader.setOrderLines(Set.of(orderLine));
         // orderLine.setOrderHeader(orderheader);
         orderheader.addOrderLine(orderLine);
+
+        var approval = new OrderApproval();
+        approval.setApprovedBy("Me");
+        var savedApproval = oarepo.save(approval);
+
+        orderheader.setOrderApproval(savedApproval);
 
         var savedOrder = repo.save(orderheader);
 
