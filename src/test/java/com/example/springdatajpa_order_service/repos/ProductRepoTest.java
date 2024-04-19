@@ -35,7 +35,7 @@ public class ProductRepoTest {
 
     @Test
     void testGetCategories() {
-        var product = repo.findByDescription("PRODUCT1");
+        var product = repo.findByDescription("PRODUCT1").get();
         assertNotNull(product);
         assertNotNull(product.getCategories());
     }
