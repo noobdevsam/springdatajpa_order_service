@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 
 import com.example.springdatajpa_order_service.domain.Address;
 import com.example.springdatajpa_order_service.domain.Customer;
@@ -36,6 +38,8 @@ public class DataLoadTest {
     @Autowired
     ProductRepo productRepo;
 
+    @Disabled
+    @Rollback(value = false)
     @Test
     void testDataLoader() {
         List<Product> products = loadProducts();
