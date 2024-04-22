@@ -54,6 +54,13 @@ public class DataLoadTest {
         orderHeaderRepo.flush();
     }
 
+    @Test
+    void testLazyDataLoad() {
+        var orderheader = orderHeaderRepo.getReferenceById(13l);
+        System.out.println("Order Id: " + orderheader.getId());
+        System.out.println("Customer name: " + orderheader.getCustomer().getCustomerName());
+    }
+
     private OrderHeader saveOrder(Customer customer, List<Product> products) {
         Random random = new Random();
 
