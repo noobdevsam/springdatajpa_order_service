@@ -36,7 +36,7 @@ import lombok.*;
 })
 public class OrderHeader extends BaseEntity {
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
     @Embedded
