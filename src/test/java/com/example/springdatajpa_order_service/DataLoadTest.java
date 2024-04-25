@@ -1,8 +1,10 @@
 package com.example.springdatajpa_order_service;
 
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -59,6 +61,17 @@ public class DataLoadTest {
         var orderheader = orderHeaderRepo.getReferenceById(13l);
         System.out.println("Order Id: " + orderheader.getId());
         System.out.println("Customer name: " + orderheader.getCustomer().getCustomerName());
+    }
+
+    @Test
+    void test_hibernate_n_plus_problem() {
+        Customer cs = customerRepo.findCustomerByCustomerNameIgnoreCase(TEST_CUSTOMER).get();
+
+        IntSummaryStatistics totalOrdereed = orderHeaderRepo.findAllByCustomer(cs).stream()
+        .flatMap(orderheader -> orderheader.getOrderLines().stream())
+        .collect(Collectors.summarizingInt(ol -> ol.getQuantityOrdered()));
+
+        System.out.println("Total ordered: " + totalOrdereed.getSum());
     }
 
     private OrderHeader saveOrder(Customer customer, List<Product> products) {

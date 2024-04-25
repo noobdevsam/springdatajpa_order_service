@@ -1,6 +1,10 @@
 package com.example.springdatajpa_order_service.domain;
 
 import java.util.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,10 +52,12 @@ public class OrderHeader extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<OrderLine> orderLines;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Fetch(FetchMode.SELECT)
     private OrderApproval orderApproval;
 
     public void setOrderApproval(OrderApproval orderApproval) {
