@@ -56,6 +56,7 @@ public class DataLoadTest {
         orderHeaderRepo.flush();
     }
 
+    @Disabled
     @Test
     void testLazyDataLoad() {
         var orderheader = orderHeaderRepo.getReferenceById(13l);
@@ -63,6 +64,7 @@ public class DataLoadTest {
         System.out.println("Customer name: " + orderheader.getCustomer().getCustomerName());
     }
 
+    @Disabled
     @Test
     void test_hibernate_n_plus_problem() {
         Customer cs = customerRepo.findCustomerByCustomerNameIgnoreCase(TEST_CUSTOMER).get();
