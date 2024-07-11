@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.hibernate.annotations.processing.SQL;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,28 @@ public class DataLoadTest {
         .collect(Collectors.summarizingInt(ol -> ol.getQuantityOrdered()));
 
         System.out.println("Total ordered: " + totalOrdereed.getSum());
+    }
+
+    @Test
+    void test_db_lock() {
+        var id = 1L;
+
+        var orderHeader = orderHeaderRepo.findById(id).get();
+        var billTo = new Address();
+        billTo.setAddress("bill me");
+        orderHeader.setBillToAddress(billTo);
+
+        orderHeaderRepo.saveAndFlush(orderHeader);
+
+        System.out.println("I updated the order.");
+
+    /*
+        On db-client, run the following SQL statment with autocommit off, then run this test.
+
+            select * from order_header where id = 1 for update;
+
+        Once you commit manually, the test will complete.
+    */
     }
 
     private OrderHeader saveOrder(Customer customer, List<Product> products) {
