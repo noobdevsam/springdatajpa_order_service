@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.hibernate.annotations.processing.SQL;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
