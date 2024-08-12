@@ -6,6 +6,7 @@ import java.util.Set;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,9 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customer")
     private Set<OrderHeader> orders = new LinkedHashSet<>();
 
+    @Version
+    private Integer version;
+
     // excluding 'orders' property
     @Override
     public int hashCode() {
@@ -35,6 +39,7 @@ public class Customer extends BaseEntity {
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((phone == null) ? 0 : phone.hashCode());
         result = prime * result + ((address == null) ? 0 : address.hashCode());
+        result = prime * result + ((version == null) ? 0 : version.hashCode());
         return result;
     }
 
@@ -71,6 +76,11 @@ public class Customer extends BaseEntity {
             if (other.orders != null)
                 return false;
         } else if (!orders.equals(other.orders))
+            return false;
+        if (version == null) {
+            if (other.version != null)
+                return false;
+        } else if (!version.equals(other.version))
             return false;
         return true;
     }
