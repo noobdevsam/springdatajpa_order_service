@@ -124,6 +124,7 @@ public class OrderHeaderRepoTest {
         repo.deleteById(savedOrder.getId());
 
         assertThrows(JpaObjectRetrievalFailureException.class, () -> {
+            @SuppressWarnings("unused")
             var fetchedOrder = repo.getReferenceById(savedOrder.getId());
         });
 
