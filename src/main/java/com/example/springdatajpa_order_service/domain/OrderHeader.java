@@ -39,6 +39,9 @@ import lombok.*;
     )
 })
 public class OrderHeader extends BaseEntity {
+
+    @Version
+    private Integer version;
     
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
@@ -79,6 +82,7 @@ public class OrderHeader extends BaseEntity {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
+        result = prime * result + ((version == null) ? 0 : version.hashCode());
         result = prime * result + ((customer == null) ? 0 : customer.hashCode());
         result = prime * result + ((shippingAddress == null) ? 0 : shippingAddress.hashCode());
         result = prime * result + ((billToAddress == null) ? 0 : billToAddress.hashCode());
@@ -95,6 +99,11 @@ public class OrderHeader extends BaseEntity {
         if (getClass() != obj.getClass())
             return false;
         OrderHeader other = (OrderHeader) obj;
+        if (version == null) {
+            if (other.version != null)
+                return false;
+        } else if (!version.equals(other.version))
+            return false;
         if (customer == null) {
             if (other.customer != null)
                 return false;
