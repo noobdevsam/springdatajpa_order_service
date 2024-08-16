@@ -6,16 +6,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.example.springdatajpa_order_service.domain.Product;
 import com.example.springdatajpa_order_service.domain.ProductStatus;
+import com.example.springdatajpa_order_service.services.ProductService;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ComponentScan(basePackageClasses = {ProductService.class})
 public class ProductRepoTest {
 
     @Autowired
     ProductRepo repo;
+
+    @Autowired
+    ProductService productService;
 
     @Test
     void testSaveProduct() {
@@ -46,10 +52,8 @@ public class ProductRepoTest {
         product.setDescription("My Product");
         product.setProductStatus(ProductStatus.NEW);
 
-        var savedProduct = repo.saveAndFlush(product);
-        savedProduct.setQuantityOnHand(25);
-
-        var savedProduct2 = repo.saveAndFlush(savedProduct);
+        var savedProduct = productService.saveProduct(product);
+        var savedProduct2 = productService.updateQOH(savedProduct.getId(), 25);
 
         System.out.println(savedProduct2.getQuantityOnHand());
     }
