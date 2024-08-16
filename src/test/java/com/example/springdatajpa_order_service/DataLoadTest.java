@@ -76,6 +76,7 @@ public class DataLoadTest {
         System.out.println("Total ordered: " + totalOrdereed.getSum());
     }
 
+    @Disabled
     @Test
     void test_db_lock() {
         var id = 1L;

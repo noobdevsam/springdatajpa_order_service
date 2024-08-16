@@ -2,15 +2,8 @@ package com.example.springdatajpa_order_service.domain;
 
 import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @NoArgsConstructor
 @Data
@@ -22,6 +15,8 @@ public class Product extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
+
+    private Integer quantityOnHand = 0;
 
     @ManyToMany
     @JoinTable(
