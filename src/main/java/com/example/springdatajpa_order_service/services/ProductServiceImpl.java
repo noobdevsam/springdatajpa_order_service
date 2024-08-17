@@ -1,6 +1,8 @@
 package com.example.springdatajpa_order_service.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.springdatajpa_order_service.domain.Product;
 import com.example.springdatajpa_order_service.repos.ProductRepo;
 
@@ -18,6 +20,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepo.saveAndFlush(product);
     }
 
+    @Transactional
     @Override
     public Product updateQOH(Long id, Integer quantityOnHand) {
         var product = productRepo.findById(id).orElseThrow();

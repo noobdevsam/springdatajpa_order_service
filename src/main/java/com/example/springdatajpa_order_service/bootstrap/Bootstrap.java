@@ -61,7 +61,8 @@ public class Bootstrap implements CommandLineRunner{
         customerRepo.deleteById(savedCustomer3.getId());
     }
 
-    // this will create 4 hibernate calls
+    // after declaring updateQOH() with @Transactional in the service implementation
+    // this method will create 3 hibernate calls
     private void updateProduct() {
         var product = new Product();
         product.setDescription("MyProductsslfs");
