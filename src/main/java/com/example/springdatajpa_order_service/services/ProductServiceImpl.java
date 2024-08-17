@@ -1,7 +1,6 @@
 package com.example.springdatajpa_order_service.services;
 
 import org.springframework.stereotype.Service;
-
 import com.example.springdatajpa_order_service.domain.Product;
 import com.example.springdatajpa_order_service.repos.ProductRepo;
 
