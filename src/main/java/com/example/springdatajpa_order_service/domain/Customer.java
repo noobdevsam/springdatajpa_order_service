@@ -3,10 +3,13 @@ package com.example.springdatajpa_order_service.domain;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,10 +20,15 @@ import lombok.Setter;
 @Entity
 public class Customer extends BaseEntity {
     
+    @Length(max = 50)
     private String customerName;
+    
     private String email;
+
+    @Length(max = 20)
     private String phone;
 
+    @Valid
     @Embedded
     private Address address;
 

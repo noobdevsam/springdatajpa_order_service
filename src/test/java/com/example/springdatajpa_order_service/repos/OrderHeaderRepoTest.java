@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 
+import com.example.springdatajpa_order_service.domain.Address;
 import com.example.springdatajpa_order_service.domain.Customer;
 import com.example.springdatajpa_order_service.domain.OrderApproval;
 import com.example.springdatajpa_order_service.domain.OrderHeader;
@@ -44,10 +45,19 @@ public class OrderHeaderRepoTest {
     @Test
     void testSaveOrder() {
         var orderheader = new OrderHeader();
-        // orderheader.setCustomer("New Customer");
 
         var customer = new Customer();
         customer.setCustomerName("N customer");
+
+        //validation error will provide a understandable stacktrace message for this property
+        customer.setPhone("syitdigzhs");
+
+        var address = new Address();
+
+        //validation error will provide a understandable stacktrace message for this property
+        address.setCity("gxkensnxjg");
+        
+        customer.setAddress(address);
         var savedCustomer = curepo.save(customer);
 
         orderheader.setCustomer(savedCustomer);
